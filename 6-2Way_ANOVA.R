@@ -128,6 +128,15 @@ contrast(emm_model1, "consec", simple = "each", combine = TRUE, adjust = "mvt")
 model.cells <- emmeans(model1, ~ Type * Treatment)
 pwpp(model.cells, type = "response")
 
+#add CLD notation from multcomp::cld
+#non-nuanced approach
+plot_CO2 +
+  annotate("text", x = .75, y = 40, label = "2")+
+  annotate("text", x = 1.25, y = 35, label = "2")+
+  annotate("text", x = 1.75, y = 30, label = "1")+
+  annotate("text", x = 2.25, y = 20, label = "1")+
+  annotate("text", x = 2, y = 37.5, label = "Shared letters indicate no pairwise \n differences  (P > 0.05) between groups ")
+
 
 
 

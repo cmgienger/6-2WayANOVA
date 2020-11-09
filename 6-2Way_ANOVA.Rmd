@@ -168,27 +168,19 @@ Because there are two treatments, it breaks them into two panels.
 #connecting letters differences report
 multcomp::cld(emm_model1)
 ```
-
 Simple Contrasts
 ```{r}
 contrast(emm_model1, "consec", simple = "each", combine = TRUE, adjust = "mvt")
 ```
-
-
-
-
-
-
-
-
-
 Pairwise P-value plots; pwpp plots
 ```{r}
+#a nuanced approach to multiple comparisons
 model.cells <- emmeans(model1, ~ Type * Treatment)
 pwpp(model.cells, type = "response")
 ```
 ```{r}
 #add CLD notation from multcomp::cld
+#non-nuanced approach
 plot_CO2 +
   annotate("text", x = .75, y = 40, label = "2")+
   annotate("text", x = 1.25, y = 35, label = "2")+
