@@ -130,11 +130,13 @@ summary_CO2
 ```
 
 ```{r}
-ggplot(summary_CO2, aes(x=Type, y=mean_uptake, fill=Treatment)) +
+plot_CO2 <- ggplot(summary_CO2, aes(x=Type, y=mean_uptake, fill=Treatment)) +
   geom_bar(stat="identity", color="black", position=position_dodge()) +
   geom_errorbar(aes(ymin=mean_uptake-se_uptake, ymax=mean_uptake+se_uptake), width=.2, position=position_dodge(.9))+
   ylab("CO2 uptake rates (umol/m^2 sec)")+
   theme_bw()
+
+plot_CO2
 ```
 Making this figure is not as intuitive as you might think because of the position dodge required, 
 the stat="identity", and error bar specification.
@@ -184,6 +186,15 @@ Pairwise P-value plots; pwpp plots
 ```{r}
 model.cells <- emmeans(model1, ~ Type * Treatment)
 pwpp(model.cells, type = "response")
+```
+```{r}
+#add CLD notation from multcomp::cld
+plot_CO2 +
+  annotate("text", x = .75, y = 40, label = "2")+
+  annotate("text", x = 1.25, y = 35, label = "2")+
+  annotate("text", x = 1.75, y = 30, label = "1")+
+  annotate("text", x = 2.25, y = 20, label = "1")+
+  annotate("text", x = 2, y = 37.5, label = "Shared letters indicate no pairwise \n differences  (P > 0.05) between groups ")
 ```
 
 
