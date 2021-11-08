@@ -11,7 +11,7 @@ library(multcompView)
 
 #http://r4all.org/posts/importing-data-update/
 #can fix by using string as factors option (button)
-growth.moo <- read_csv("growth.csv")
+growth.moo <- read.csv("growth.csv")
 
 glimpse(growth.moo)
 #see character data as factors
@@ -29,7 +29,7 @@ supplement = relevel(supplement, ref="control"))
 # check it worked
 levels(growth.moo$supplement)
 
-# calculate mean and sd of gain for all 12 combinations
+# calculate mean weight gain for all 12 combinations
 sumMoo <- growth.moo %>%
 group_by(diet, supplement) %>%
 summarise(meanGrow = mean(gain))
@@ -57,7 +57,7 @@ anova(model_cow)
 
 summary(model_cow)
 
-# calculate mean and sd of gain for all 12 combinations
+# calculate mean and SE of gain for all 12 combinations
 sumMoo <- growth.moo %>%
   group_by(diet, supplement) %>%
   summarise(
@@ -80,7 +80,9 @@ theme_bw()
 #overnight before the experiment was conducted.
 ###############CO2 Example#######################################
 
-data_CO2<-CO2
+data_CO2<-CO2 #dataset built into R
+
+?CO2
 
 summary_CO2<-data_CO2 %>%
   group_by(Type, Treatment) %>%
