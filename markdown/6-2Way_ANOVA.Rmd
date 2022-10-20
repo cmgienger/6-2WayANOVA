@@ -18,7 +18,7 @@ library(multcompView)
 
 ```{r include=FALSE, echo=FALSE}
 #change depending on whether you want just questions or questions AND answers
-knitr::opts_chunk$set(fig.path='Figs/', echo=FALSE, warning=FALSE, message=FALSE)
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
 ```
 ```{r}
 #http://r4all.org/posts/importing-data-update/
@@ -63,12 +63,14 @@ summarise(meanGrow = mean(gain))
 # make sure it worked
 sumMoo
 ```
+
 ```{r}
 #as always, make a plot first
 ggplot(sumMoo, aes(x = supplement, y = meanGrow)) +
   geom_point() +
   theme_bw()
 ```
+
 ```{r}
 ggplot(sumMoo, aes(x = supplement, y = meanGrow,
 colour = diet, group = diet)) +
@@ -76,17 +78,21 @@ geom_point() +
 geom_line() +
 theme_bw()
 ```
+
 ```{r message=FALSE, warning=FALSE}
 model_cow <- lm(gain ~ diet * supplement, data = growth.moo)
 #examine model
 autoplot(model_cow, smooth.colour = NA)
 ```
+
 ```{r}
 anova(model_cow)
 ```
+
 ```{r}
 summary(model_cow)
 ```
+
 ```{r message=FALSE, warning=FALSE}
 # calculate mean and se of gain for all 12 combinations
 sumMoo <- growth.moo %>%
@@ -97,6 +103,7 @@ sumMoo <- growth.moo %>%
 )
 sumMoo
 ```
+
 ```{r}
 ggplot(sumMoo, aes(x = supplement, y = meanGrow,
                    colour = diet, group = diet)) +
@@ -178,6 +185,7 @@ Pairwise P-value plots; pwpp plots
 model.cells <- emmeans(model1, ~ Type * Treatment)
 pwpp(model.cells, type = "response")
 ```
+
 ```{r}
 #add CLD notation from multcomp::cld
 #non-nuanced approach
