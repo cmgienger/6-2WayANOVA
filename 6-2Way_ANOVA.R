@@ -65,6 +65,7 @@ sumMoo <- growth.moo %>%
     seGrow = sd(gain)/sqrt(n()))
 sumMoo
 
+#make a ggplot using the summarized data
 ggplot(sumMoo, aes(x = supplement, y = meanGrow,
                    colour = diet, group = diet)) +
   geom_point() +
