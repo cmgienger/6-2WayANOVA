@@ -1,0 +1,59 @@
+---
+title: "Herbicide Example (2-Way ANOVA)"
+output: html_notebook
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(stats) #TukeyHSD function; only works on aov models, not lm
+library(multcomp)
+library(multcompView)
+library(emmeans)
+```
+
+```{r}
+data <- read.csv("../herbicide.csv") #herbicide data live up one level 
+
+data <- data %>% 
+  filter(dose_category == "low" | dose_category == "high")
+```
+
+```{r}
+ggplot(data, aes(herbicide, drymatter, color=dose_category)) +
+  geom_boxplot()
+```
+
+
+```{r}
+model1 <- lm(drymatter ~ herbicide * dose_category, data=data)
+summary(model1)
+model1_aov <-aov(drymatter ~ herbicide * dose_category, data=data)
+# must use aov specification to get stats::TukeyHSD function to work
+```
+```{r}
+anova(model1)
+```
+```{r}
+TukeyHSD(model1_aov)
+#same as emmeans, but only works on aov model objects
+#could remove this part from any example.
+```
+
+```{r}
+model1_contrasts <- emmeans(model1, specs = pairwise ~ herbicide * dose_category) 
+model1_contrasts
+```
+
+
+```{r}
+model1_CLD <- emmeans(model1,
+                      pairwise ~ herbicide*dose_category,
+                      adjust="tukey")
+
+cld(model1_CLD,
+    alpha=.05,
+    Letters=letters) 
+```
+
+
+
